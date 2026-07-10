@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KLY Automation & Assistant — Interactive Presentation</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP for elite high-fidelity animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            50: '#FDFCFB',
+                            100: '#FBF9F6',
+                            200: '#F5EFE6',
+                            300: '#EAE2D8'
+                        },
+                        charcoal: '#191919',
+                        sunset: {
+                            DEFAULT: '#E05A36',
+                            hover: '#C74724',
+                            light: '#FAF1ED'
+                        },
+                        sage: {
+                            light: '#E8F0EC',
+                            dark: '#2A6F4E'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Georgia', 'ui-serif', 'serif'],
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['SFMono-Regular', 'Consolas', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Setup full-screen viewport layout */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: #FBF9F6;
+        }
+
+        /* Slide Deck Transitions */
+        .slide-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+        .slide-container.active {
+            opacity: 1;
+            pointer-events: auto;
+            visibility: visible;
+            z-index: 5;
+        }
+
+        /* Direct Documentation Link Badges */
+        .doc-link {
+            transition: all 0.2s ease;
+        }
+        .doc-link:hover {
+            transform: translateY(-1px);
+            background-color: #E05A36;
+            color: #FFFFFF !important;
+            border-color: #E05A36;
+        }
+
+        /* Custom Scrollbar for left text columns if needed */
+        .scroll-custom::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scroll-custom::-webkit-scrollbar-track {
+            background: #F5EFE6;
+        }
+        .scroll-custom::-webkit-scrollbar-thumb {
+            background: #E05A36;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-charcoal flex flex-col justify-between min-h-screen">
+
+    <!-- TOP HEADER -->
+    <header class="h-16 border-b border-cream-300 px-6 md:px-12 flex justify-between items-center bg-cream-50 z-20">
+        <div class="flex items-center space-x-3">
+            <span class="text-xs tracking-widest font-bold bg-charcoal text-cream-100 px-2 py-1 rounded">KLY</span>
+            <span class="font-serif text-lg md:text-xl font-bold tracking-tight">Automation & Assistant</span>
+        </div>
+        <div class="text-xs md:text-sm font-medium text-gray-500">
+            Slide <span id="current-slide-num" class="text-charcoal font-bold">1</span> dari <span class="text-charcoal font-bold">8</span>
+        </div>
+    </header>
+
+    <!-- MAIN SLIDE VIEWER -->
+    <main class="flex-grow relative overflow-hidden bg-cream-100">
+
+        <!-- SLIDE 1: VISION -->
+        <div class="slide-container active" id="slide-1">
+            <div class="h-full w-full max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <!-- Left panel: Narratives -->
+                <div class="w-full lg:w-[45%] space-y-6 text-left flex flex-col justify-center h-full">
+                    <span class="text-xs uppercase tracking-widest text-sunset font-bold s-animate-fade">Visi Utama</span>
+                    <h1 class="font-serif text-3xl md:text-5xl font-bold leading-tight s-animate-slide">Otomatisasi Data & Workflow Tanpa Ribet</h1>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed s-animate-fade">
+                        Kami tidak sedang membangun sistem baru yang rumit atau mengubah cara kerja tim. **KLY Automation & Assistant** adalah asisten pintar minimalis yang menghubungkan analitik situs, monitoring kompetitor, dan monitoring ads langsung ke sarana komunikasi harian Anda.
+                    </p>
+                    <div class="p-4 bg-cream-200 border-l-4 border-sunset rounded-r-lg s-animate-fade">
+                        <p class="text-xs md:text-sm font-serif italic text-charcoal leading-relaxed">
+                            "Meningkatkan leverage kinerja tim Redaksi, Produk, dan Komersial lewat asisten chat instan dengan minimal effort dan zero learning curve."
+                        </p>
+                    </div>
+                    <!-- Quick Document Links -->
+                    <div class="pt-2 s-animate-fade">
+                        <span class="text-[10px] uppercase font-bold text-gray-400 block mb-2 tracking-wider">Akses Dokumentasi Terkait:</span>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="00-master-plan.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600 flex items-center space-x-1">
+                                📄 <span>00-master-plan.md</span>
+                            </a>
+                            <a href="README.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600 flex items-center space-x-1">
+                                📄 <span>README.md</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right panel: Interactive Phone Sandbox (Strict 9:16 Aspect Ratio) -->
+                <div class="w-full lg:w-[50%] flex justify-center items-center h-full s-animate-right">
+                    <div class="w-[270px] h-[480px] bg-charcoal rounded-[36px] p-3 shadow-2xl border-4 border-gray-800 relative flex flex-col justify-between overflow-hidden">
+                        <!-- Camera notch -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-5 bg-charcoal rounded-b-xl z-20 flex justify-center items-center">
+                            <div class="w-12 h-1.5 bg-gray-700 rounded-full"></div>
+                        </div>
+                        <!-- Screen -->
+                        <div class="bg-[#efeae2] flex-grow rounded-[28px] overflow-hidden flex flex-col pt-6 pb-2 px-3 justify-between">
+                            <!-- WhatsApp Header -->
+                            <div class="bg-[#075e54] text-white p-2.5 flex items-center space-x-2 -mx-3 -mt-1 shadow-sm">
+                                <div class="w-7 h-7 rounded-full bg-cream-200 text-[#075e54] flex items-center justify-center font-bold text-xs">KA</div>
+                                <div>
+                                    <div class="font-bold text-[11px]">KLY Assistant</div>
+                                    <div class="text-[8px] text-emerald-200">Online • Sistem Otomasi</div>
+                                </div>
+                            </div>
+                            <!-- Chat Screen -->
+                            <div class="flex-grow py-3 overflow-y-auto space-y-2.5 flex flex-col text-[11px]" id="chat-s1">
+                                <div class="bg-white text-gray-800 p-2 rounded-lg max-w-[85%] self-start shadow-sm" id="s1-chat-1">
+                                    Halo tim KLY! Saya asisten KLY Automation. Apa yang ingin kita periksa hari ini? 😊
+                                </div>
+                            </div>
+                            <!-- Chat Input footer -->
+                            <div class="flex items-center justify-between bg-white rounded-full px-3 py-1.5 border border-gray-200">
+                                <span class="text-gray-400 text-[9px]" id="s1-input-text">Ketik pesan...</span>
+                                <button onclick="triggerS1Chat()" class="bg-emerald-500 hover:bg-emerald-600 text-white rounded-full w-5 h-5 flex items-center justify-center shadow">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: MULTI PLATFORM -->
+        <div class="slide-container" id="slide-2">
+            <div class="h-full w-full max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <!-- Left panel -->
+                <div class="w-full lg:w-[45%] space-y-5 text-left flex flex-col justify-center h-full">
+                    <span class="text-xs uppercase tracking-widest text-sunset font-bold s-animate-fade">Fleksibilitas</span>
+                    <h1 class="font-serif text-3xl md:text-5xl font-bold leading-tight s-animate-slide">Aktifkan di Berbagai Platform Chat Anda</h1>
+                    <p class="text-gray-600 text-sm leading-relaxed s-animate-fade">
+                        Tidak perlu menginstal aplikasi baru di perangkat staf. Asisten otomatisasi ini modular dan siap dipasang langsung di platform komunikasi harian divisi Anda.
+                    </p>
+                    <div class="grid grid-cols-2 gap-3 pt-1 s-animate-fade">
+                        <div onclick="switchPlatform('googlechat')" class="p-3 bg-white hover:bg-cream-200 border-2 border-sunset rounded-xl cursor-pointer transition shadow-sm flex items-center space-x-2.5" id="tab-googlechat">
+                            <span class="text-lg">💬</span>
+                            <div>
+                                <h4 class="font-bold text-xs">Google Chat</h4>
+                                <span class="text-[9px] text-gray-400">Standar workspace internal</span>
+                            </div>
+                        </div>
+                        <div onclick="switchPlatform('whatsapp')" class="p-3 bg-white hover:bg-cream-200 border border-gray-200 rounded-xl cursor-pointer transition flex items-center space-x-2.5" id="tab-whatsapp">
+                            <span class="text-lg">🟢</span>
+                            <div>
+                                <h4 class="font-bold text-xs">WhatsApp</h4>
+                                <span class="text-[9px] text-gray-400">Akses mobile tercepat</span>
+                            </div>
+                        </div>
+                        <div onclick="switchPlatform('slack')" class="p-3 bg-white hover:bg-cream-200 border border-gray-200 rounded-xl cursor-pointer transition flex items-center space-x-2.5" id="tab-slack">
+                            <span class="text-lg">🔵</span>
+                            <div>
+                                <h4 class="font-bold text-xs">Slack & Telegram</h4>
+                                <span class="text-[9px] text-gray-400">Operasional & alerting</span>
+                            </div>
+                        </div>
+                        <div onclick="switchPlatform('discord')" class="p-3 bg-white hover:bg-cream-200 border border-gray-200 rounded-xl cursor-pointer transition flex items-center space-x-2.5" id="tab-discord">
+                            <span class="text-lg">👾</span>
+                            <div>
+                                <h4 class="font-bold text-xs">Discord / Email</h4>
+                                <span class="text-[9px] text-gray-400">Laporan terjadwal</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Document Link -->
+                    <div class="pt-2 s-animate-fade">
+                        <span class="text-[10px] uppercase font-bold text-gray-400 block mb-2 tracking-wider">Akses Dokumentasi Terkait:</span>
+                        <a href="00-master-plan.md" target="_blank" class="doc-link text-xs inline-block px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                            📄 <span>00-master-plan.md</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Right panel -->
+                <div class="w-full lg:w-[50%] flex justify-center items-center h-full s-animate-right">
+                    <!-- Platform UI Sandbox (Strict 9:16 Aspect Ratio) -->
+                    <div class="w-[270px] h-[480px] bg-white border border-cream-300 rounded-[36px] p-5 shadow-xl flex flex-col justify-between" id="platform-card">
+                        <!-- Platform Header -->
+                        <div class="flex items-center space-x-3 border-b border-cream-200 pb-3">
+                            <div class="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center text-lg" id="platform-avatar">💬</div>
+                            <div>
+                                <h3 class="font-bold text-xs text-charcoal" id="platform-title">Google Chat KLY</h3>
+                                <p class="text-[9px] text-gray-400">KLY Assistant Bot • Terintegrasi</p>
+                            </div>
+                        </div>
+                        <!-- Platform Message Body -->
+                        <div class="flex-grow py-4 flex flex-col justify-center space-y-3" id="platform-msg-container">
+                            <div class="p-3 bg-cream-50 border border-cream-300 rounded-2xl text-xs space-y-1.5">
+                                <span class="font-semibold text-sunset text-[10px] block">📢 GOOGLE WORKSPACE AUTOMATION</span>
+                                <p class="text-gray-700 leading-normal text-[11px]" id="platform-msg-text">
+                                    "KLY Assistant memantau traffic real-time Google Analytics 4 dan mengirimkan laporan otomatis ke Google Chat Room Redaksi setiap pukul 09:00 WIB."
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Platform Footer info -->
+                        <div class="text-[10px] text-gray-400 text-center border-t border-cream-200 pt-3">
+                            *Setiap channel obrolan menggunakan satu API backend terpadu.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: PHASE 0 FOUNDATION -->
+        <div class="slide-container" id="slide-3">
+            <div class="h-full w-full max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <!-- Left panel -->
+                <div class="w-full lg:w-[45%] space-y-6 text-left flex flex-col justify-center h-full">
+                    <span class="text-xs uppercase tracking-widest text-sunset font-bold s-animate-fade">Fase Pertama</span>
+                    <h1 class="font-serif text-3xl md:text-5xl font-bold leading-tight s-animate-slide">Phase 0 — Fondasi & Keamanan Sistem</h1>
+                    <p class="text-gray-600 text-sm leading-relaxed s-animate-fade">
+                        Sebelum menghubungkan data bisnis, kita mendirikan pondasi yang sangat aman. Meluncurkan server asisten, mengamankan gateway, dan mengaktifkan whitelist pengguna agar sistem steril dari ancaman keamanan.
+                    </p>
+                    <div class="space-y-3 s-animate-fade text-sm text-gray-700">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-sunset">🛡</span>
+                            <span><strong>Whitelist Otentikasi:</strong> Hanya nomor WhatsApp/staf terdaftar yang diizinkan chat.</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-sunset">🗒</span>
+                            <span><strong>Full Audit Logging:</strong> Setiap kueri terekam lengkap untuk keperluan kontrol internal.</span>
+                        </div>
+                    </div>
+                    <!-- Documents Links -->
+                    <div class="pt-2 s-animate-fade">
+                        <span class="text-[10px] uppercase font-bold text-gray-400 block mb-2 tracking-wider">Akses Dokumentasi Terkait:</span>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="phase-0-hermes-foundation/prd.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                                📄 prd.md
+                            </a>
+                            <a href="phase-0-hermes-foundation/plan.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                                📄 plan.md
+                            </a>
+                            <a href="phase-0-hermes-foundation/architecture.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                                📄 architecture.md
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right panel -->
+                <div class="w-full lg:w-[50%] flex justify-center items-center h-full s-animate-right">
+                    <!-- Secure Log simulation (Strict 9:16 Aspect Ratio) -->
+                    <div class="w-[270px] h-[480px] bg-charcoal text-green-400 font-mono rounded-[36px] p-5 shadow-2xl flex flex-col justify-between text-xs overflow-hidden">
+                        <div>
+                            <div class="flex justify-between items-center text-gray-400 border-b border-gray-700 pb-2 mb-3">
+                                <span class="text-[10px]">📟 SECURITY AUDIT TRAIL</span>
+                                <span class="text-[9px] bg-red-900 text-red-100 px-1.5 py-0.5 rounded">Active</span>
+                            </div>
+                            <div class="space-y-3 text-[10px] leading-relaxed" id="terminal-log">
+                                <p class="text-gray-500">[09:00:02] INITIALIZING KLY ASSISTANT SERVER...</p>
+                                <p class="text-gray-500">[09:00:03] LOADED WHITELIST: 42 STAFFS</p>
+                                <p class="text-yellow-400">[09:05:12] WARNING: Chat request from untrusted ID (+628119939xx)</p>
+                                <p class="text-red-500">[09:05:12] SECURITY: Request denied. (Default-Deny policy enforced)</p>
+                                <p class="text-green-400">[09:12:45] SUCCESS: Query from whitelisted ID (andri.p@kly.id)</p>
+                                <p class="text-gray-300">[09:12:46] LOGGED: Executed skill "/traffic-liputan6"</p>
+                            </div>
+                        </div>
+                        <div class="text-center text-[9px] text-gray-500 border-t border-gray-800 pt-3">
+                            *Enkripsi SSL & Whitelist menjamin asisten aman 100%.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: PHASE 1 DATA ACCESS (MCP) -->
+        <div class="slide-container" id="slide-4">
+            <div class="h-full w-full max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <!-- Left panel -->
+                <div class="w-full lg:w-[45%] space-y-6 text-left flex flex-col justify-center h-full">
+                    <span class="text-xs uppercase tracking-widest text-sunset font-bold s-animate-fade">Standardisasi Data</span>
+                    <h1 class="font-serif text-3xl md:text-5xl font-bold leading-tight s-animate-slide">Phase 1 — Isolasi Kredensial & Model Context Protocol</h1>
+                    <p class="text-gray-600 text-sm leading-relaxed s-animate-fade">
+                        Keamanan data adalah prioritas utama. Melalui arsitektur **Model Context Protocol (MCP)** yang terstandar, asisten cerdas kita tidak pernah menyentuh database utama secara langsung, melainkan melalui jembatan konektor yang terenkripsi dan terisolasi.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-700 s-animate-fade">
+                        <li class="flex items-start space-x-2">
+                            <span class="text-sunset">✔</span>
+                            <span><strong>Zero API Exposure:</strong> AI tidak memegang API Keys atau password database secara langsung.</span>
+                        </li>
+                        <li class="flex items-start space-x-2">
+                            <span class="text-sunset">✔</span>
+                            <span><strong>Konektor Reusable:</strong> Sekali konektor GA4 dibangun, ia dapat digunakan kembali oleh agen atau asisten mana pun di masa mendatang.</span>
+                        </li>
+                    </ul>
+                    <!-- Document Links -->
+                    <div class="pt-2 s-animate-fade">
+                        <span class="text-[10px] uppercase font-bold text-gray-400 block mb-2 tracking-wider">Akses Dokumentasi Terkait:</span>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="phase-1-data-access/prd.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                                📄 prd.md
+                            </a>
+                            <a href="phase-1-data-access/plan.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                                📄 plan.md
+                            </a>
+                            <a href="phase-1-data-access/erd.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                                📄 erd.md
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right panel -->
+                <div class="w-full lg:w-[50%] flex justify-center items-center h-full s-animate-right">
+                    <!-- Interactive Architecture Sandbox (Strict 9:16 Aspect Ratio) -->
+                    <div class="w-[270px] h-[480px] bg-white border border-cream-300 rounded-[36px] p-5 shadow-xl flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-3">Model Aliran Data Terisolasi</span>
+                            <div class="space-y-3 text-center">
+                                <div onclick="highlightMCP('client')" class="p-2 border border-gray-200 rounded-lg bg-gray-50 cursor-pointer transition text-[11px]" id="mcp-client">
+                                    📱 <strong>KLY Assistant Interface</strong>
+                                    <span class="text-[8px] text-gray-400 block">WhatsApp / Google Chat Client</span>
+                                </div>
+                                <div class="h-3 flex justify-center"><div class="w-0.5 h-full bg-gray-300"></div></div>
+                                <div onclick="highlightMCP('mcp')" class="p-2 border-2 border-sunset rounded-lg bg-sunset-light cursor-pointer transition text-[11px]" id="mcp-server">
+                                    🛡 <strong>MCP Proxy Server</strong>
+                                    <span class="text-[8px] text-sunset font-bold block">Isolasi Kredensial Database</span>
+                                </div>
+                                <div class="h-3 flex justify-center"><div class="w-0.5 h-full bg-gray-300"></div></div>
+                                <div onclick="highlightMCP('db')" class="p-2 border border-gray-200 rounded-lg bg-gray-50 cursor-pointer transition text-[11px]" id="mcp-db">
+                                    🗄 <strong>KLY Database / CMS / GA4</strong>
+                                    <span class="text-[8px] text-gray-400 block">Sistem Internal steril dan aman</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-2.5 bg-cream-50 rounded-xl border border-cream-300 text-[10px] leading-relaxed" id="mcp-description">
+                            <strong class="text-sunset">Model Context Protocol:</strong> Lapisan keamanan universal yang memisahkan AI dan database demi keamanan 100%.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: EDITORIAL USE CASES -->
+        <div class="slide-container" id="slide-5">
+            <div class="h-full w-full max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <!-- Left panel -->
+                <div class="w-full lg:w-[45%] space-y-6 text-left flex flex-col justify-center h-full">
+                    <span class="text-xs uppercase tracking-widest text-sunset font-bold s-animate-fade">Otomatisasi Redaksi</span>
+                    <h1 class="font-serif text-3xl md:text-5xl font-bold leading-tight s-animate-slide">Meningkatkan Kecepatan & Akurasi Redaksi</h1>
+                    <p class="text-gray-600 text-sm leading-relaxed s-animate-fade">
+                        Redaksi bekerja berpacu dengan waktu. KLY Assistant mengeliminasi proses manual pencarian berita viral kompetitor dan memudahkan penyusunan draf berita SEO.
+                    </p>
+                    <div class="space-y-3 s-animate-fade text-sm text-gray-700">
+                        <div class="p-3 bg-white border border-cream-300 rounded-xl">
+                            <span class="font-bold text-sunset">Story+ (Agent A):</span>
+                            <span class="text-xs text-gray-500 block mt-0.5">Konversi rilis berita, riset instan, atau draf mentah menjadi tulisan matang terstruktur dalam 3 detik.</span>
+                        </div>
+                        <div class="p-3 bg-white border border-cream-300 rounded-xl">
+                            <span class="font-bold text-sunset">Radar Kompetitor (Agent C):</span>
+                            <span class="text-xs text-gray-500 block mt-0.5">Memantau RSS kompetitor 24/7 dan mengirimkan notifikasi ke chat Redaksi begitu mendeteksi tren viral.</span>
+                        </div>
+                    </div>
+                    <button onclick="triggerS5Sim()" class="bg-sunset hover:bg-sunset-hover text-white font-semibold text-xs py-2 px-5 rounded-full transition w-max">
+                        ▶ Jalankan Simulasi Otomatisasi Redaksi
+                    </button>
+                    <!-- Document Links -->
+                    <div class="pt-1 s-animate-fade">
+                        <span class="text-[10px] uppercase font-bold text-gray-400 block mb-2 tracking-wider">Akses Dokumentasi Terkait:</span>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="phase-2-business-use-cases/prd.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                                📄 prd.md
+                            </a>
+                            <a href="phase-2-business-use-cases/workflow.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                                📄 workflow.md
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right panel -->
+                <div class="w-full lg:w-[50%] flex justify-center items-center h-full s-animate-right">
+                    <!-- WhatsApp Simulator (Strict 9:16 Aspect Ratio) -->
+                    <div class="w-[270px] h-[480px] bg-charcoal rounded-[36px] p-3 shadow-2xl border-4 border-gray-800 relative flex flex-col justify-between overflow-hidden">
+                        <!-- Camera notch -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-5 bg-charcoal rounded-b-xl z-20 flex justify-center items-center">
+                            <div class="w-12 h-1.5 bg-gray-700 rounded-full"></div>
+                        </div>
+                        <!-- Screen -->
+                        <div class="bg-[#efeae2] flex-grow rounded-[28px] overflow-hidden flex flex-col pt-6 pb-2 px-3 justify-between">
+                            <!-- Header -->
+                            <div class="bg-[#075e54] text-white p-2.5 flex items-center space-x-2 -mx-3 -mt-1 shadow-sm">
+                                <div class="w-7 h-7 rounded-full bg-cream-200 text-[#075e54] flex items-center justify-center font-bold text-xs">KA</div>
+                                <div>
+                                    <div class="font-bold text-[11px]">KLY Assistant</div>
+                                    <div class="text-[8px] text-emerald-200">Online • Redaksi</div>
+                                </div>
+                            </div>
+                            <!-- Chat Box -->
+                            <div class="flex-grow py-3 overflow-y-auto space-y-2.5 flex flex-col text-[10px]" id="chat-s5">
+                                <div class="bg-white text-gray-800 p-2 rounded-lg max-w-[85%] self-start shadow-sm">
+                                    Tekan tombol "Jalankan Simulasi" di panel kiri untuk melihat demo interaktif alert redaksi!
+                                </div>
+                            </div>
+                            <!-- Footer -->
+                            <div class="flex items-center justify-between bg-white rounded-full px-3 py-1.5 border border-gray-200">
+                                <span class="text-gray-400 text-[9px]">Ketik pesan...</span>
+                                <div class="bg-gray-300 rounded-full w-5 h-5 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: REVENUE USE CASES -->
+        <div class="slide-container" id="slide-6">
+            <div class="h-full w-full max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <!-- Left panel -->
+                <div class="w-full lg:w-[45%] space-y-6 text-left flex flex-col justify-center h-full">
+                    <span class="text-xs uppercase tracking-widest text-sunset font-bold s-animate-fade">Commercial Optimization</span>
+                    <h1 class="font-serif text-3xl md:text-5xl font-bold leading-tight s-animate-slide">Proteksi & Optimalisasi Yield Iklan</h1>
+                    <p class="text-gray-600 text-sm leading-relaxed s-animate-fade">
+                        KLY Assistant tidak hanya pasif menjawab pertanyaan. Ia memantau stabilitas fill rate unit iklan utama di halaman CMS, mencocokkannya dengan revenue BigQuery, dan proaktif memberi peringatan.
+                    </p>
+                    <div class="p-3 bg-white border border-cream-300 rounded-xl s-animate-fade text-xs space-y-1.5">
+                        <span class="font-bold text-sunset">KLY Revenue Guard (Agent D):</span>
+                        <p class="text-gray-500 leading-normal">
+                            Saat unit iklan premium gagal meluncur sempurna, sistem langsung mendeteksi drop fill-rate dan mengirim push alert ke tim Ad-Ops agar segera ditindaklanjuti.
+                        </p>
+                    </div>
+                    <button onclick="triggerS6Sim()" class="bg-sunset hover:bg-sunset-hover text-white font-semibold text-xs py-2 px-5 rounded-full transition w-max">
+                        📊 Simulasikan Drop Revenue Iklan
+                    </button>
+                    <!-- Document Links -->
+                    <div class="pt-1 s-animate-fade">
+                        <span class="text-[10px] uppercase font-bold text-gray-400 block mb-2 tracking-wider">Akses Dokumentasi Terkait:</span>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="phase-2-business-use-cases/prd.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                                📄 prd.md
+                            </a>
+                            <a href="phase-2-business-use-cases/erd.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                                📄 erd.md
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right panel -->
+                <div class="w-full lg:w-[50%] flex justify-center items-center h-full s-animate-right">
+                    <!-- Dashboard simulation and smartphone mini alert (Strict 9:16 Aspect Ratio) -->
+                    <div class="w-[270px] h-[480px] bg-white border border-cream-300 rounded-[36px] p-5 shadow-xl flex flex-col justify-between relative" id="yield-dashboard">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Ad Yield Real-Time</span>
+                                <span id="yield-status" class="text-[9px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">Normal</span>
+                            </div>
+                            <!-- Yield Chart -->
+                            <div class="h-28 bg-gray-50 rounded-xl p-3 border border-gray-150 relative flex items-end justify-between overflow-hidden">
+                                <div class="w-6 bg-charcoal h-24 rounded-t transition-all duration-700" id="bar-1"></div>
+                                <div class="w-6 bg-charcoal h-20 rounded-t transition-all duration-700" id="bar-2"></div>
+                                <div class="w-6 bg-charcoal h-22 rounded-t transition-all duration-700" id="bar-3"></div>
+                                <div class="w-6 bg-charcoal h-24 rounded-t transition-all duration-700" id="bar-4"></div>
+                                <div class="w-6 bg-charcoal h-20 rounded-t transition-all duration-700" id="bar-5"></div>
+                                <div class="w-6 bg-charcoal h-22 rounded-t transition-all duration-700" id="bar-6"></div> <!-- Dynamic Drop -->
+                            </div>
+                            <div class="flex justify-between text-[8px] text-gray-400 mt-1 px-1">
+                                <span>10:00</span>
+                                <span>11:00</span>
+                                <span>12:00</span>
+                                <span>13:00</span>
+                                <span>14:00</span>
+                                <span class="text-sunset font-bold">15:00</span>
+                            </div>
+                        </div>
+                        <!-- Mini Alert Box overlay -->
+                        <div class="p-3 bg-red-50 border border-red-200 rounded-2xl text-[11px] space-y-1 transform scale-95 opacity-0 transition-all duration-500" id="s6-alert-overlay">
+                            <span class="font-bold text-red-700 block text-[10px]">🚨 ANOMALI REVENUE</span>
+                            <p class="text-gray-700 leading-normal text-[10px]">
+                                Fill rate unit iklan premium 'KLY-Front-Header' anjlok 24% sejak 15:00 WIB. Estimasi kerugian iklan berjalan Rp 4.2jt/jam.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: TECH REQUIREMENTS -->
+        <div class="slide-container" id="slide-7">
+            <div class="h-full w-full max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <!-- Left panel -->
+                <div class="w-full lg:w-[45%] space-y-6 text-left flex flex-col justify-center h-full">
+                    <span class="text-xs uppercase tracking-widest text-sunset font-bold s-animate-fade">Spesifikasi</span>
+                    <h1 class="font-serif text-3xl md:text-5xl font-bold leading-tight s-animate-slide">Persyaratan Teknis & Infrastruktur Setup</h1>
+                    <p class="text-gray-600 text-sm leading-relaxed s-animate-fade">
+                        Kami merancang setup arsitektur KLY Assistant agar sangat ringan, modular, dan dapat dijalankan di atas infrastruktur server standar yang sudah ada di kantor KLY saat ini.
+                    </p>
+                    <div class="p-4 bg-cream-200 border-l-4 border-sunset rounded-r-lg s-animate-fade">
+                        <p class="text-xs font-serif italic text-charcoal leading-relaxed">
+                            "Infrastruktur modern berbasis container (Docker) memastikan instalasi cepat, pemeliharaan mudah, dan biaya operasional yang sangat ekonomis."
+                        </p>
+                    </div>
+                    <!-- Document Links -->
+                    <div class="pt-1 s-animate-fade">
+                        <span class="text-[10px] uppercase font-bold text-gray-400 block mb-2 tracking-wider">Akses Dokumentasi Terkait:</span>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="00-decision-log.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                                📄 00-decision-log.md
+                            </a>
+                            <a href="phase-0-hermes-foundation/plan.md" target="_blank" class="doc-link text-xs px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                                📄 plan.md
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right panel -->
+                <div class="w-full lg:w-[50%] flex justify-center items-center h-full s-animate-right">
+                    <!-- Bento Grid for Tech Requirements (Strict 9:16 Aspect Ratio Layout) -->
+                    <div class="w-[270px] h-[480px] bg-white border border-cream-300 rounded-[36px] p-5 shadow-xl flex flex-col justify-between" id="bento-tech">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block border-b border-cream-100 pb-2">Spesifikasi Infra Ringkas</span>
+                        <div class="flex-grow py-3 flex flex-col justify-between gap-3 overflow-y-auto scroll-custom">
+                            <div class="p-3 bg-cream-50 rounded-xl border border-cream-200 text-left">
+                                <span class="text-base">🖥</span>
+                                <h4 class="font-bold text-[11px] text-charcoal mt-1">Server Host VPS (Hemat)</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5">Cukup Virtual Machine standar (1 vCPU, 1GB RAM) untuk menjalankan container Docker server asisten secara andal.</p>
+                            </div>
+                            <div class="p-3 bg-cream-50 rounded-xl border border-cream-200 text-left">
+                                <span class="text-base">⚙</span>
+                                <h4 class="font-bold text-[11px] text-charcoal mt-1">Software Stack</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5">Python 3.10+, Node.js 18+, Docker Engine (standard containerized runtime).</p>
+                            </div>
+                            <div class="p-3 bg-cream-50 rounded-xl border border-cream-200 text-left">
+                                <span class="text-base">🔒</span>
+                                <h4 class="font-bold text-[11px] text-charcoal mt-1">Gateway & LLM API</h4>
+                                <p class="text-[9px] text-gray-500 mt-0.5">Cukup 1 Nomor WhatsApp Biasa (menggunakan library open-source tanpa biaya API pihak ke-3 / Twilio / WABA) + Google Chat API + OpenAI / OpenRouter API Key.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: ROADMAP -->
+        <div class="slide-container" id="slide-8">
+            <div class="h-full w-full max-w-7xl mx-auto px-6 md:px-12 py-8 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <!-- Left panel -->
+                <div class="w-full lg:w-[45%] space-y-6 text-left flex flex-col justify-center h-full">
+                    <span class="text-xs uppercase tracking-widest text-sunset font-bold s-animate-fade">Peta Jalan</span>
+                    <h1 class="font-serif text-3xl md:text-5xl font-bold leading-tight s-animate-slide">Timeline & Eksekusi Bertahap</h1>
+                    <p class="text-gray-600 text-sm leading-relaxed s-animate-fade">
+                        Rencana peluncuran bertahap meminimalkan risiko integrasi teknis. Setiap fase memberikan delivery fungsional konkret yang langsung bisa diuji oleh pengguna internal kantor KLY.
+                    </p>
+                    <div class="grid grid-cols-2 gap-2.5 s-animate-fade text-left">
+                        <div onclick="selectRM(0)" id="rm-btn-0" class="p-3 bg-white border-2 border-sunset rounded-xl cursor-pointer transition shadow-sm">
+                            <span class="text-[9px] font-bold text-sunset">MINGGU 1-2</span>
+                            <h4 class="font-bold text-xs mt-0.5">Phase 0: Foundation</h4>
+                        </div>
+                        <div onclick="selectRM(1)" id="rm-btn-1" class="p-3 bg-white border border-gray-200 rounded-xl cursor-pointer transition">
+                            <span class="text-[9px] font-bold text-gray-400">MINGGU 3-4</span>
+                            <h4 class="font-bold text-xs mt-0.5">Phase 1 & 2: Data & Agents</h4>
+                        </div>
+                        <div onclick="selectRM(2)" id="rm-btn-2" class="p-3 bg-white border border-gray-200 rounded-xl cursor-pointer transition col-span-2">
+                            <span class="text-[9px] font-bold text-gray-400">MINGGU 5-6</span>
+                            <h4 class="font-bold text-xs mt-0.5">Phase 3: Proactive Alerts</h4>
+                        </div>
+                    </div>
+                    <!-- Document Link -->
+                    <div class="pt-1 s-animate-fade">
+                        <span class="text-[10px] uppercase font-bold text-gray-400 block mb-2 tracking-wider">Akses Dokumentasi Terkait:</span>
+                        <a href="00-roadmap.md" target="_blank" class="doc-link text-xs inline-block px-3 py-1.5 border border-cream-300 rounded-full font-medium text-gray-600">
+                            📄 <span>00-roadmap.md</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Right panel -->
+                <div class="w-full lg:w-[50%] flex justify-center items-center h-full s-animate-right">
+                    <!-- Interactive Roadmap Detail Card (Strict 9:16 Aspect Ratio) -->
+                    <div class="w-[270px] h-[480px] bg-white border border-cream-300 rounded-[36px] p-6 shadow-xl flex flex-col justify-between" id="roadmap-card">
+                        <div>
+                            <span class="text-xs font-bold text-sunset uppercase tracking-wider block" id="rm-weeks">MINGGU 1-2</span>
+                            <h3 class="font-serif text-lg font-bold text-charcoal mt-1" id="rm-title">Phase 0: Foundation Setup</h3>
+                            <div class="mt-4 space-y-3">
+                                <div>
+                                    <span class="text-[10px] font-bold text-gray-400 block uppercase">Exit Criteria Utama</span>
+                                    <p class="text-[11px] text-gray-600 mt-1 leading-relaxed" id="rm-exit">
+                                        Server dasar KLY Assistant berjalan, webhook chat aktif terhubung, whitelist nomor telepon dikunci, dan audit logging terekam sempurna.
+                                    </p>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-bold text-gray-400 block uppercase">Benefit Utama</span>
+                                    <p class="text-[11px] text-gray-600 mt-1 leading-relaxed" id="rm-benefit">
+                                        Menjamin kesiapan infrastruktur teraman yang siap ditumpangi konektor data analitik di fase berikutnya.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-[9px] text-gray-400 text-center border-t border-cream-200 pt-3">
+                            *Setiap checkpoint diuji oleh unit QA internal.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- BOTTOM CONTROLLER FOOTER -->
+    <footer class="h-16 border-t border-cream-300 px-6 md:px-12 flex justify-between items-center bg-cream-50 z-20">
+        <button onclick="changeSlide('prev')" id="prev-btn" class="border border-cream-300 hover:bg-cream-200 text-charcoal font-medium text-xs py-2 px-4 rounded-full transition flex items-center space-x-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            <span>Kembali</span>
+        </button>
+
+        <!-- Bullet Dots -->
+        <div class="flex space-x-2">
+            <button onclick="goToSlideIndex(1)" class="w-2.5 h-2.5 rounded-full bg-sunset transition duration-300" id="bullet-1"></button>
+            <button onclick="goToSlideIndex(2)" class="w-2.5 h-2.5 rounded-full bg-cream-300 transition duration-300" id="bullet-2"></button>
+            <button onclick="goToSlideIndex(3)" class="w-2.5 h-2.5 rounded-full bg-cream-300 transition duration-300" id="bullet-3"></button>
+            <button onclick="goToSlideIndex(4)" class="w-2.5 h-2.5 rounded-full bg-cream-300 transition duration-300" id="bullet-4"></button>
+            <button onclick="goToSlideIndex(5)" class="w-2.5 h-2.5 rounded-full bg-cream-300 transition duration-300" id="bullet-5"></button>
+            <button onclick="goToSlideIndex(6)" class="w-2.5 h-2.5 rounded-full bg-cream-300 transition duration-300" id="bullet-6"></button>
+            <button onclick="goToSlideIndex(7)" class="w-2.5 h-2.5 rounded-full bg-cream-300 transition duration-300" id="bullet-7"></button>
+            <button onclick="goToSlideIndex(8)" class="w-2.5 h-2.5 rounded-full bg-cream-300 transition duration-300" id="bullet-8"></button>
+        </div>
+
+        <button onclick="changeSlide('next')" id="next-btn" class="bg-sunset hover:bg-sunset-hover text-cream-100 font-medium text-xs py-2 px-5 rounded-full transition flex items-center space-x-1.5 shadow-md">
+            <span>Lanjut</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+    </footer>
+
+    <!-- INTERACTIVE SCRIPTS -->
+    <script>
+        let currentSlide = 1;
+        const maxSlides = 8;
+        const slideNumLabel = document.getElementById('current-slide-num');
+
+        // Dynamic GitHub Page Relative Link Rewriter Helper
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hostname.includes('github.io')) {
+                const pathParts = window.location.pathname.split('/').filter(Boolean);
+                if (pathParts.length > 0) {
+                    const repoName = pathParts[0]; // First segment of pathname in github.io corresponds to repo name
+                    const username = window.location.hostname.split('.')[0];
+                    const githubBaseUrl = `https://github.com/${username}/${repoName}/blob/main/`;
+
+                    document.querySelectorAll('a').forEach(link => {
+                        const href = link.getAttribute('href');
+                        // Rewrite relative links targeting .md files to point directly to source repo on GitHub
+                        if (href && !href.startsWith('http') && !href.startsWith('#')) {
+                            const cleanHref = href.replace(/^\.\//, '');
+                            link.setAttribute('href', githubBaseUrl + cleanHref);
+                            link.setAttribute('target', '_blank');
+                        }
+                    });
+                }
+            }
+            updateNavigationButtons();
+        });
+
+        // Toggle state styling of previous and next buttons
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            if (currentSlide === 1) {
+                prevBtn.classList.add('opacity-40', 'pointer-events-none', 'cursor-not-allowed');
+            } else {
+                prevBtn.classList.remove('opacity-40', 'pointer-events-none', 'cursor-not-allowed');
+            }
+
+            if (currentSlide === maxSlides) {
+                nextBtn.classList.add('opacity-40', 'pointer-events-none', 'cursor-not-allowed');
+            } else {
+                nextBtn.classList.remove('opacity-40', 'pointer-events-none', 'cursor-not-allowed');
+            }
+        }
+
+        // Initial launch animation of active slide elements using GSAP
+        function playSlideAnimations(slideIndex) {
+            const activeSlide = document.getElementById(`slide-${slideIndex}`);
+            const fades = activeSlide.querySelectorAll('.s-animate-fade');
+            const slides = activeSlide.querySelectorAll('.s-animate-slide');
+            const right = activeSlide.querySelectorAll('.s-animate-right');
+
+            // Reset start states clean
+            gsap.set([fades, slides, right], { clearProps: "all" });
+
+            gsap.from(slides, {
+                opacity: 0,
+                y: 30,
+                duration: 0.6,
+                ease: "power2.out",
+                stagger: 0.15
+            });
+
+            gsap.from(fades, {
+                opacity: 0,
+                duration: 0.8,
+                ease: "power1.out",
+                delay: 0.3,
+                stagger: 0.1
+            });
+
+            gsap.from(right, {
+                opacity: 0,
+                x: 40,
+                duration: 0.7,
+                ease: "back.out(1.2)",
+                delay: 0.4
+            });
+
+            // Special Slide Init Tasks
+            if (slideIndex === 1) {
+                document.getElementById('chat-s1').innerHTML = `
+                    <div class="bg-white text-gray-800 p-2 rounded-lg max-w-[85%] self-start shadow-sm" id="s1-chat-1">
+                        Halo tim KLY! Saya asisten KLY Automation. Apa yang ingin kita periksa hari ini? 😊
+                    </div>
+                `;
+                s1State = 0;
+            } else if (slideIndex === 7) {
+                const bentoItems = document.querySelectorAll('#bento-tech > div > div');
+                gsap.from(bentoItems, {
+                    scale: 0.92,
+                    opacity: 0,
+                    duration: 0.5,
+                    stagger: 0.12,
+                    ease: "back.out(1.5)",
+                    delay: 0.5
+                });
+            }
+        }
+
+        // Global Navigation state changer
+        function changeSlide(direction) {
+            const oldSlide = document.getElementById(`slide-${currentSlide}`);
+            let nextIndex = currentSlide;
+
+            if (direction === 'next' && currentSlide < maxSlides) {
+                nextIndex++;
+            } else if (direction === 'prev' && currentSlide > 1) {
+                nextIndex--;
+            }
+
+            if (nextIndex !== currentSlide) {
+                // Animate old elements out completely
+                gsap.to(oldSlide, {
+                    opacity: 0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        oldSlide.classList.remove('active');
+                        const newSlide = document.getElementById(`slide-${nextIndex}`);
+                        newSlide.classList.add('active');
+
+                        // FIX: Explicitly enforce opacity 1 using GSAP to overwrite inline styles during backward navigation
+                        gsap.set(newSlide, { opacity: 1 });
+
+                        slideNumLabel.innerText = nextIndex;
+
+                        // Update active bullet dots
+                        for (let i = 1; i <= maxSlides; i++) {
+                            const bullet = document.getElementById(`bullet-${i}`);
+                            if (i === nextIndex) {
+                                bullet.classList.add('bg-sunset');
+                                bullet.classList.remove('bg-cream-300');
+                            } else {
+                                bullet.classList.remove('bg-sunset');
+                                bullet.classList.add('bg-cream-300');
+                            }
+                        }
+
+                        currentSlide = nextIndex;
+                        updateNavigationButtons();
+                        playSlideAnimations(nextIndex);
+                    }
+                });
+            }
+        }
+
+        function goToSlideIndex(index) {
+            if (index === currentSlide) return;
+            const oldSlide = document.getElementById(`slide-${currentSlide}`);
+
+            gsap.to(oldSlide, {
+                opacity: 0,
+                duration: 0.3,
+                onComplete: () => {
+                    oldSlide.classList.remove('active');
+                    const newSlide = document.getElementById(`slide-${index}`);
+                    newSlide.classList.add('active');
+
+                    // FIX: Explicitly enforce opacity 1 to avoid blank screens
+                    gsap.set(newSlide, { opacity: 1 });
+
+                    slideNumLabel.innerText = index;
+
+                    for (let i = 1; i <= maxSlides; i++) {
+                        const bullet = document.getElementById(`bullet-${i}`);
+                        if (i === index) {
+                            bullet.classList.add('bg-sunset');
+                            bullet.classList.remove('bg-cream-300');
+                        } else {
+                            bullet.classList.remove('bg-sunset');
+                            bullet.classList.add('bg-cream-300');
+                        }
+                    }
+
+                    currentSlide = index;
+                    updateNavigationButtons();
+                    playSlideAnimations(index);
+                }
+            });
+        }
+
+        // Keyboard arrows handler
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') {
+                changeSlide('next');
+            } else if (e.key === 'ArrowLeft') {
+                changeSlide('prev');
+            }
+        });
+
+        // Run animations on initial load
+        window.addEventListener('DOMContentLoaded', () => {
+            playSlideAnimations(1);
+        });
+
+
+        // SLIDE 1 INTERACTIVE SIMULATOR
+        let s1State = 0;
+        function triggerS1Chat() {
+            const chatBox = document.getElementById('chat-s1');
+            const inputText = document.getElementById('s1-input-text');
+
+            if (s1State === 0) {
+                inputText.innerText = "Ketik pesan...";
+
+                // User message
+                const userMsg = document.createElement('div');
+                userMsg.className = "bg-emerald-100 text-gray-800 p-2 rounded-lg max-w-[85%] self-end shadow-sm mt-2";
+                userMsg.innerText = "Cek ringkasan traffic Liputan6 hari ini";
+                chatBox.appendChild(userMsg);
+                gsap.from(userMsg, { scale: 0.85, opacity: 0, duration: 0.3, ease: "back.out" });
+                chatBox.scrollTop = chatBox.scrollHeight;
+                s1State = 1;
+
+                // Typing indicator & reply delay
+                setTimeout(() => {
+                    const hermesReply = document.createElement('div');
+                    hermesReply.className = "bg-white text-gray-800 p-2 rounded-lg max-w-[85%] self-start shadow-sm mt-2";
+                    hermesReply.innerHTML = `📊 <strong>Liputan6 Traffic:</strong> 1.1M Pageviews hari ini (+3.4% vs kemarin). Kanal terpopuler: News & Showbiz.`;
+                    chatBox.appendChild(hermesReply);
+                    gsap.from(hermesReply, { scale: 0.85, opacity: 0, duration: 0.4, ease: "back.out" });
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }, 1100);
+            }
+        }
+
+
+        // SLIDE 2 PLATFORM SELECTION SWITCHER
+        function switchPlatform(platform) {
+            const tabs = ['googlechat', 'whatsapp', 'slack', 'discord'];
+            const titleLabel = document.getElementById('platform-title');
+            const avatarLabel = document.getElementById('platform-avatar');
+            const msgText = document.getElementById('platform-msg-text');
+            const cardEl = document.getElementById('platform-card');
+
+            // Reset tab active state styles
+            tabs.forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                el.classList.remove('border-sunset', 'border-2', 'shadow-sm');
+                el.classList.add('border-gray-200', 'border');
+            });
+
+            // Set current active
+            const activeEl = document.getElementById(`tab-${platform}`);
+            activeEl.classList.add('border-sunset', 'border-2', 'shadow-sm');
+            activeEl.classList.remove('border-gray-200', 'border');
+
+            // GSAP pulse animation on card
+            gsap.fromTo(cardEl, { scale: 0.98, opacity: 0.9 }, { scale: 1, opacity: 1, duration: 0.3 });
+
+            // Switch metadata
+            if (platform === 'googlechat') {
+                avatarLabel.innerText = "💬";
+                titleLabel.innerText = "Google Chat KLY";
+                msgText.innerText = "KLY Assistant memantau traffic real-time Google Analytics 4 dan mengirimkan laporan otomatis ke Google Chat Room Redaksi setiap pukul 09:00 WIB.";
+            } else if (platform === 'whatsapp') {
+                avatarLabel.innerText = "🟢";
+                titleLabel.innerText = "WhatsApp Group Ad-Ops";
+                msgText.innerText = "KLY Assistant mengirimkan alert instan ke grup WhatsApp tim Ad-Ops begitu ada unit iklan premium terdeteksi anomali fill-rate.";
+            } else if (platform === 'slack') {
+                avatarLabel.innerText = "🔵";
+                titleLabel.innerText = "Slack #ops-monitoring";
+                msgText.innerText = "Bot integrasi Slack otomatis mengabarkan status kesehatan webhook server dan latensi database KLY secara komprehensif.";
+            } else if (platform === 'discord') {
+                avatarLabel.innerText = "👾";
+                titleLabel.innerText = "Discord Analytics Channel";
+                msgText.innerText = "Visualisasi ringkas pencapaian performa SEO mingguan dikirim otomatis ke channel koordinasi produk dan jurnalis.";
+            }
+        }
+
+
+        // SLIDE 4 MCP HIGHLIGHT NODE INTERACTION
+        function highlightMCP(node) {
+            const nodes = ['client', 'mcp', 'db'];
+            const elements = {
+                client: document.getElementById('mcp-client'),
+                mcp: document.getElementById('mcp-server'),
+                db: document.getElementById('mcp-db')
+            };
+            const desc = document.getElementById('mcp-description');
+
+            // Reset borders
+            nodes.forEach(n => {
+                elements[n].classList.remove('border-sunset', 'bg-sunset-light', 'border-2');
+                elements[n].classList.add('border-gray-200', 'bg-gray-50');
+                elements[n].querySelector('strong').classList.remove('text-sunset');
+            });
+
+            // Set Active
+            elements[node].classList.add('border-sunset', 'bg-sunset-light', 'border-2');
+            elements[node].classList.remove('border-gray-200', 'bg-gray-50');
+
+            if (node === 'client') {
+                elements[node].querySelector('strong').classList.add('text-sunset');
+                desc.innerHTML = `<strong class="text-sunset">Client Interface:</strong> Saluran pesan depan (WhatsApp/Google Chat) hanya mengurus tampilan, input, dan output. Tidak memproses database langsung.`;
+            } else if (node === 'mcp') {
+                elements[node].querySelector('strong').classList.add('text-sunset');
+                desc.innerHTML = `<strong class="text-sunset">MCP Secure Layer:</strong> Satu-satunya gerbang yang mengonversi pertanyaan AI menjadi kueri database aman. Kredensial steril dan tersimpan rapat.`;
+            } else if (node === 'db') {
+                elements[node].querySelector('strong').classList.add('text-sunset');
+                desc.innerHTML = `<strong class="text-sunset">Database Internal:</strong> GA4, BigQuery, dan CMS Anda terlindungi 100% di belakang proxy. Tidak ada risiko kebocoran query atau brute-force.`;
+            }
+            gsap.from(desc, { y: 5, opacity: 0.8, duration: 0.3 });
+        }
+
+
+        // SLIDE 5 EDITORIAL NOTIFICATION SIMULATOR
+        let s5Timer;
+        function triggerS5Sim() {
+            const chatBox = document.getElementById('chat-s5');
+            chatBox.innerHTML = '';
+            clearTimeout(s5Timer);
+
+            // 1. Send Alert
+            const alertMsg = document.createElement('div');
+            alertMsg.className = "bg-red-50 text-red-800 p-2 rounded border border-red-200 whatsapp-bubble mt-1";
+            alertMsg.innerHTML = `🚨 <strong>TREN VIRAL:</strong> DetikNews merilis draf "Otomatisasi Jurnalisme Lokal" dengan 10,000 shares dalam 15 menit.`;
+            chatBox.appendChild(alertMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // 2. Hermes option
+            s5Timer = setTimeout(() => {
+                const hermesOffer = document.createElement('div');
+                hermesOffer.className = "bg-white text-gray-800 p-2 rounded-lg max-w-[85%] self-start shadow-sm mt-2 whatsapp-bubble";
+                hermesOffer.innerText = "Isu ini relevan dengan kanal News kita. Apakah Anda ingin saya buatkan draf tandingan ramah SEO? (Ketik 'Ya')";
+                chatBox.appendChild(hermesOffer);
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                // 3. User Response
+                s5Timer = setTimeout(() => {
+                    const userYes = document.createElement('div');
+                    userYes.className = "bg-emerald-100 text-gray-800 p-2 rounded-lg max-w-[85%] self-end shadow-sm mt-2 whatsapp-bubble";
+                    userYes.innerText = "Ya, tolong buatkan";
+                    chatBox.appendChild(userYes);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+
+                    // 4. Draft Generation typing simulation
+                    s5Timer = setTimeout(() => {
+                        const finalDraft = document.createElement('div');
+                        finalDraft.className = "bg-white text-gray-800 p-2.5 rounded-lg max-w-[85%] self-start shadow-sm mt-2 whatsapp-bubble";
+                        finalDraft.innerHTML = `📝 <strong>Draf Berita KLY:</strong><br/>
+                        <strong>Judul:</strong> Mengintip Inovasi Otomatisasi AI di Industri Media Indonesia<br/>
+                        <strong>Draf:</strong> Integrasi kecerdasan buatan kini bukan lagi fiksi, melainkan solusi nyata untuk membantu jurnalis memproduksi konten berkualitas...<br/><br/>
+                        <em>Draf tersimpan di CMS Redaksi #1088!</em>`;
+                        chatBox.appendChild(finalDraft);
+                        chatBox.scrollTop = chatBox.scrollHeight;
+
+                        // Elastic bounce pop
+                        gsap.from(finalDraft, { scale: 0.9, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+                    }, 1400);
+                }, 1000);
+            }, 1200);
+        }
+
+
+        // SLIDE 6 COMMERCIAL REVENUE YIELD DROP SIMULATOR
+        function triggerS6Sim() {
+            const bar6 = document.getElementById('bar-6');
+            const alertBox = document.getElementById('s6-alert-overlay');
+            const statusLabel = document.getElementById('yield-status');
+
+            // Drop column height using GSAP bounce
+            gsap.to(bar6, {
+                height: "30px",
+                duration: 0.8,
+                ease: "bounce.out"
+            });
+            bar6.classList.remove('bg-charcoal');
+            bar6.classList.add('bg-sunset');
+
+            // Alert Box overlay pop in
+            gsap.to(alertBox, {
+                opacity: 1,
+                scale: 1,
+                y: -10,
+                duration: 0.5,
+                ease: "back.out(1.5)",
+                delay: 0.4
+            });
+
+            // Update status tag to warning
+            statusLabel.innerText = "Anomali!";
+            statusLabel.classList.remove('bg-emerald-100', 'text-emerald-800');
+            statusLabel.classList.add('bg-red-100', 'text-red-800');
+        }
+
+
+        // SLIDE 8 INTERACTIVE ROADMAP SELECTOR
+        const rmData = {
+            0: {
+                weeks: "MINGGU 1-2",
+                title: "Phase 0: Foundation Setup",
+                exit: "Server dasar KLY Assistant berjalan stabil, webhook chat terhubung dua arah, whitelist nomor telepon dikunci, dan audit logging terekam sempurna.",
+                benefit: "Menjamin kesiapan infrastruktur dasar teraman sebelum asisten AI dihubungkan dengan data analitik di fase berikutnya."
+            },
+            1: {
+                weeks: "MINGGU 3-4",
+                title: "Phase 1 & 2: Launch Agents & MCP",
+                exit: "Konektor universal MCP GA4, BigQuery, dan CMS selesai dibangun. Tim editorial mulai menggunakan modul pembuatan draf artikel otomatis.",
+                benefit: "Meningkatkan produktivitas penyusunan rilis pers hingga 40% dan kemudahan review traffic harian secara instan."
+            },
+            2: {
+                weeks: "MINGGU 5-6",
+                title: "Phase 3: Proactive Alerts",
+                exit: "Sistem otomasi scheduler dan deteksi anomali diaktifkan di backend, alert otomatis dikirim instan ke grup chat khusus redaksi & Ad-ops.",
+                benefit: "Mengurangi waktu respons penanganan anomali traffic atau gangguan yield pendapatan iklan dari berjam-jam menjadi kurang dari 5 menit."
+            }
+        };
+
+        function selectRM(phaseId) {
+            const phases = [0, 1, 2];
+            phases.forEach(id => {
+                const el = document.getElementById(`rm-btn-${id}`);
+                if (id === phaseId) {
+                    el.classList.add('border-sunset', 'border-2', 'shadow-sm');
+                    el.classList.remove('border-gray-200', 'border');
+                    el.querySelector('span').classList.add('text-sunset');
+                    el.querySelector('span').classList.remove('text-gray-400');
+                } else {
+                    el.classList.remove('border-sunset', 'border-2', 'shadow-sm');
+                    el.classList.add('border-gray-200', 'border');
+                    el.querySelector('span').classList.remove('text-sunset');
+                    el.querySelector('span').classList.add('text-gray-400');
+                }
+            });
+
+            // GSAP Update roadmap card contents
+            const card = document.getElementById('roadmap-card');
+            gsap.to(card, {
+                opacity: 0,
+                y: 10,
+                duration: 0.2,
+                onComplete: () => {
+                    const data = rmData[phaseId];
+                    document.getElementById('rm-weeks').innerText = data.weeks;
+                    document.getElementById('rm-title').innerText = data.title;
+                    document.getElementById('rm-exit').innerText = data.exit;
+                    document.getElementById('rm-benefit').innerText = data.benefit;
+
+                    gsap.to(card, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" });
+                }
+            });
+        }
+    </script>
+</body>
+</html>
