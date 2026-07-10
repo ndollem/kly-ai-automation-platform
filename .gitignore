@@ -1,0 +1,6 @@
+.claude/
+graphify-out/
+.DS_Store
+*.log
+.env*
+node_modules/
