@@ -9,7 +9,7 @@ Phase 0 **minim data model bisnis** — belum ada entitas domain (artikel, reven
 ## 1. Diagram Entitas
 
 ```text
-┌─────────────────────────┐         ┌─────────────────────────┐
+┌──────────────────────┐         ┌──────────────────────┐
 │   USER / IDENTITY     │         │   GROUP / CHANNEL     │
 │──────────────────────│         │──────────────────────│
 │ identity_id (PK)      │         │ channel_id (PK)       │
@@ -17,27 +17,27 @@ Phase 0 **minim data model bisnis** — belum ada entitas domain (artikel, reven
 │ display_name          │         │ wa_chat_ref           │
 │ role                  │         │ served (bool)         │
 │ allowlisted (bool)    │         │ label                 │
-│ status (active|revoked)│        └──────────┬──────────┘
-└─────────┬─────────┘                    │
-           │ 1                              │
+│ status (active|revoked)│        └──────────┬───────────┘
+└──────────┬───────────┘                    │
+           │ 1                              │ 1
            │                                │
            │ N                              │ N
-┌──────────▼──────────────────────────▼───────────┐
+┌──────────▼────────────────────────────────▼─────────┐
 │                     SESSION                          │
-│────────────────────────────────────────┐
+│──────────────────────────────────────────────────────│
 │ session_id (PK)                                       │
 │ identity_id (FK ──► USER)                             │
 │ channel_id  (FK ──► GROUP/CHANNEL)                    │
 │ started_at / last_active_at / closed_at               │
 │ state (open | active | closed)                        │
 │ memory_ref  ──► (Hermes internal: FTS5 + summary)     │
-└─────────────────────────────────────┬───────────────┘
+└──────────────────────┬───────────────────────────────┘
                        │ 1
                        │
                        │ N
-            ┌─────────▼─────────┐
+            ┌──────────▼───────────┐
             │      AUDIT LOG        │
-            │──────────────────│
+            │──────────────────────│
             │ log_id (PK)           │
             │ ts                    │
             │ identity_id (FK, nullable for anon-denied)│
@@ -46,7 +46,7 @@ Phase 0 **minim data model bisnis** — belum ada entitas domain (artikel, reven
             │ event_type (msg | denied | error |        │
             │             restart | acl_change)         │
             │ summary / status / latency_ms             │
-            └──────────────────┘
+            └──────────────────────┘
 ```
 
 ## 2. Entitas & Atribut

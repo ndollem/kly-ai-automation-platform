@@ -29,7 +29,7 @@ Dua opsi (keputusan final di [ADR-004](../00-decision-log.md), task `T-DEC-01`).
 ### Opsi A — Docker di VPS (rekomendasi default fondasi WA)
 
 ```text
-┌───────────────── VPS (KLY) ──────────────────┐
+┌──────────────────────── VPS (KLY) ────────────────────────┐
 │                                                            │
 │   ┌──────────── Docker container: Hermes ───────────────┐  │
 │   │  Hermes process (always-on)                          │  │
@@ -37,12 +37,12 @@ Dua opsi (keputusan final di [ADR-004](../00-decision-log.md), task `T-DEC-01`).
 │   │   • Session + Memory store (FTS5) ──► volume mount   │  │
 │   │   • Logs ──► volume mount / log shipper              │  │
 │   │  restart policy: always                              │  │
-│   └────────────────┬─────────────────────┘ │
+│   └──────────────────┬───────────────────────────────────┘ │
 │                      │ env / secrets (mounted, not in image)│
-│   ┌──────────────────┴──────────┐   ┌──────────────────┐  │
+│   ┌──────────────────┴──────┐   ┌────────────────────────┐  │
 │   │ Secret store / .env vault│   │ Health check + monitor │  │
-│   └───────────────────────┘   └──────────────────┘  │
-└───────────┬──────────────────────┬───────────────┘
+│   └─────────────────────────┘   └────────────────────────┘  │
+└───────────────┬──────────────────────────┬─────────────────┘
                 │ HTTPS                       │ HTTPS
                 ▼                             ▼
         WhatsApp (gateway)              LLM endpoint
